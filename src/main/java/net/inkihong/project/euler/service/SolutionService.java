@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SolutionService {
 	
+	SolutionHelper helper = new SolutionHelper();
+	
 	public int getAnswer(int p) {
 		int answer = 0;
 		switch (p) {
@@ -13,6 +15,9 @@ public class SolutionService {
 			break;
 		case 2:
 			answer = getAnswer2();
+			break;
+		case 4:
+			answer = getAnswer4();
 			break;
 		}
 			
@@ -47,5 +52,20 @@ public class SolutionService {
 		
 		return answer;
 	}
-
+	
+	private int getAnswer4() {
+		int answer = 0;
+		
+		for (int i = 999; i >= 900; i--) {
+			for (int j = 999; j >= 900; j--) {
+				answer = i * j;
+				if (helper.isPalindrome(answer)) {
+					i = 0;
+					break;
+				}
+			}
+		}
+		
+		return answer;
+	}
 }
