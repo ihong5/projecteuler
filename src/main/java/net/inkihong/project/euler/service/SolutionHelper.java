@@ -19,5 +19,15 @@ public class SolutionHelper {
 		
 		return isPalindrome;
 	}
+	
+	public long getProduct(String s) {
+		long product = 1;
+		int i = 0;
+		while (i < s.length()) {
+			product *= Long.parseLong(s.substring(i, i + 1));
+			i++;
+		}
+		return product;
+	}
 
 }

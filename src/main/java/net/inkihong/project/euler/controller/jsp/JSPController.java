@@ -25,4 +25,10 @@ public class JSPController {
 		solution.addObject("solution", s);
 		return solution;
 	}
+	
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public ModelAndView error() {
+		ModelAndView error = new ModelAndView("error");
+		return error;
+	}
 }

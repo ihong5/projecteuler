@@ -2,7 +2,8 @@ package net.inkihong.project.euler.model;
 
 public class Solution {
 	
-	public int qNo, answer;
+	public int qNo;
+	public long answer;
 	public String qHeader, question;
 
 	public String getqHeader() {
@@ -13,11 +14,11 @@ public class Solution {
 		this.qHeader = qHeader;
 	}
 
-	public int getAnswer() {
+	public long getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(int answer) {
+	public void setAnswer(long answer) {
 		this.answer = answer;
 	}
 
