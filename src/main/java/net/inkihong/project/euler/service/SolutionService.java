@@ -2,6 +2,7 @@ package net.inkihong.project.euler.service;
 
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Calendar;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ public class SolutionService {
 			break;
 		case 19:
 			answer = getAnswer19();
+			break;
+		case 20:
+			answer = getAnswer20();
 			break;
 		}
 			
@@ -120,8 +124,8 @@ public class SolutionService {
 		String strPower1000 = _1000Power.toString();
 		
 		for (int i = 0; i < strPower1000.length(); i++) {
-			int factor = Integer.parseInt(strPower1000.substring(i, i + 1));
-			answer += factor;
+			int digit = Integer.parseInt(strPower1000.substring(i, i + 1));
+			answer += digit;
 		}
 		
 		return answer;
@@ -133,22 +137,40 @@ public class SolutionService {
 		Date startDate = Date.valueOf("1901-01-01"),
 			 endDate = Date.valueOf("2000-12-31");
 		
-		while (startDate.before(endDate)) {
-			startDate.
+		Calendar c1 = Calendar.getInstance(),
+				 c2 = Calendar.getInstance();
+		
+		c1.setTime(startDate);
+		c2.setTime(endDate);
+		
+		while (c1.before(c2)) {
+			if (c1.get(Calendar.DAY_OF_MONTH) == 1 && c1.get(Calendar.DAY_OF_WEEK) == 1) {
+				answer++;
+			}
+			c1.add(Calendar.MONTH, 1);
 		}
 		
-//		1 Jan 1900 was a Monday.
-//		Thirty days has September,
-//		April, June and November.
-//		All the rest have thirty-one,
-//		Saving February alone,
-//		Which has twenty-eight, rain or shine.
-//		And on leap years, twenty-nine.
-//		A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+		return answer;
+	}
+	
+	private long getAnswer20() {
+		long answer = 0;
 		
-//		How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+		BigInteger _100Factorial = BigInteger.ONE,
+				   factor = BigInteger.ONE;
 		
+		while (factor.intValue() != 100) {
+			_100Factorial = _100Factorial.multiply(factor);
+			factor = factor.add(BigInteger.ONE);
+			System.out.println(factor.intValue());
+		}
 		
+		String str100Factorial = _100Factorial.toString(); 
+		
+		for (int i = 0; i < str100Factorial.length(); i++) {
+			int digit = Integer.parseInt(str100Factorial.substring(i, i + 1));
+			answer += digit;
+		}
 		
 		return answer;
 	}
