@@ -23,11 +23,17 @@ public class SolutionService {
 		case 4:
 			answer = getAnswer4();
 			break;
+		case 5:
+			answer = getAnswer5();
+			break;
 		case 6:
 			answer = getAnswer6();
 			break;
 		case 8:
 			answer = getAnswer8();
+			break;
+		case 14:
+			answer = getAnswer14();
 			break;
 		case 16: 
 			answer = getAnswer16();
@@ -38,11 +44,18 @@ public class SolutionService {
 		case 20:
 			answer = getAnswer20();
 			break;
+		case 25:
+			answer = getAnswer25();
+			break;
+		case 28:
+			answer = getAnswer28();
+			break;
 		}
 			
 		return answer;	
 	}
 	
+	// clear
 	private int getAnswer1() {
 		int answer = 0;
 		for (int i = 0; i < 1000; i++) {
@@ -54,6 +67,7 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// clear
 	private int getAnswer2() {
 		int answer = 0,
 			prev = 1,
@@ -72,6 +86,7 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// clear
 	private int getAnswer4() {
 		int answer = 0;
 		
@@ -88,6 +103,28 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// warning - correct answer, but performance can be improved
+	private int getAnswer5() {
+		int answer = 1,
+			counter = 0;
+		
+		while (counter != 20) {
+			for (int i = 1; i <= 20; i++) {
+				if (answer % i == 0) {
+					counter++;
+				}
+			}
+			
+			if (counter != 20) {
+				counter = 0;
+				answer++;
+			}
+		}
+		
+		return answer;
+	}
+	
+	// clear
 	private int getAnswer6() {
 		int si = 0,
 			sj = 0;
@@ -100,6 +137,7 @@ public class SolutionService {
 		return sj - si;
 	}
 	
+	// clear
 	private long getAnswer8() {
 		String bigNumber = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450";
 		long answer = 0;
@@ -117,6 +155,34 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// TODO: complete this
+	private int getAnswer14() {
+		int answer = 0,
+			counter = 1,
+			max = 0;
+			
+		for (int i = 1; i < 1000000; i++) {
+			counter = 1;
+			answer = i;
+			while (answer != 1) {
+				if (answer % 2 == 0) {
+					answer /= 2;
+				} else {
+					answer = (3 * answer) + 1;
+				}
+				counter++;
+			}
+			if (counter > max) {
+				max = counter;
+				answer = i;
+				System.out.println(String.format("%d has chain length of %d!", answer, counter));
+			}
+		}
+		
+		return answer;
+	}
+	
+	// clear
 	private long getAnswer16() {
 		long answer = 0;
 		
@@ -131,6 +197,7 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// clear
 	private long getAnswer19() {
 		long answer = 0;
 		
@@ -153,7 +220,9 @@ public class SolutionService {
 		return answer;
 	}
 	
+	// clear
 	private long getAnswer20() {
+
 		long answer = 0;
 		
 		BigInteger _100Factorial = BigInteger.ONE,
@@ -162,7 +231,6 @@ public class SolutionService {
 		while (factor.intValue() != 100) {
 			_100Factorial = _100Factorial.multiply(factor);
 			factor = factor.add(BigInteger.ONE);
-			System.out.println(factor.intValue());
 		}
 		
 		String str100Factorial = _100Factorial.toString(); 
@@ -174,4 +242,39 @@ public class SolutionService {
 		
 		return answer;
 	}
+
+	// clear
+	private long getAnswer25() {
+		long answer = 1;
+		
+		BigInteger prev = BigInteger.ZERO,
+				   curr = BigInteger.ONE,
+				   next = prev.add(curr);
+		
+		int digits = 0;
+		
+		while (digits < 1000) {
+			prev = curr;
+			curr = next;
+			next = prev.add(curr);
+			answer++;
+			digits = curr.toString().length();
+		}
+		
+		return answer;
+	}
+
+	// clear
+	private long getAnswer28() {
+		long answer = 1;
+		
+		for (int n = 1; n <= 500; n++) {
+			answer += (4 * Math.pow(((2*n) + 1), 2) - (12 * n));
+		}
+		
+		return answer;
+	}
+
+    // clear
+	
 }
