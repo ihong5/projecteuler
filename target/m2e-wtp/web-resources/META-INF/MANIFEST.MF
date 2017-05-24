@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: projecteuler
 Implementation-Version: 0.0.1
-Built-By: Inki
+Built-By: ihong
 Implementation-Vendor-Id: net.inkihong.project.euler
-Build-Jdk: 1.8.0_101
+Build-Jdk: 1.8.0_131
 Implementation-URL: http://projects.spring.io/spring-boot/projecteuler
  /
 Created-By: Maven Integration for Eclipse

@@ -2,6 +2,7 @@ package net.inkihong.project.euler.service;
 
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class SolutionService {
 			break;
 		case 2:
 			answer = getAnswer2();
+			break;
+		case 3:
+			answer = getAnswer3();
 			break;
 		case 4:
 			answer = getAnswer4();
@@ -43,6 +47,9 @@ public class SolutionService {
 			break;
 		case 20:
 			answer = getAnswer20();
+			break;
+		case 22:
+			answer = getAnswer22();
 			break;
 		case 25:
 			answer = getAnswer25();
@@ -83,6 +90,19 @@ public class SolutionService {
 			curr = next;
 		}
 		
+		return answer;
+	}
+	
+	// clear
+	private long getAnswer3() {
+		long answer = 600851475143L;
+		int factor = 1;
+		while (factor < answer) {
+			if (answer % factor == 0) {
+				answer /= factor;
+			}
+			factor += 2;
+		}
 		return answer;
 	}
 	
@@ -222,7 +242,6 @@ public class SolutionService {
 	
 	// clear
 	private long getAnswer20() {
-
 		long answer = 0;
 		
 		BigInteger _100Factorial = BigInteger.ONE,
@@ -238,6 +257,22 @@ public class SolutionService {
 		for (int i = 0; i < str100Factorial.length(); i++) {
 			int digit = Integer.parseInt(str100Factorial.substring(i, i + 1));
 			answer += digit;
+		}
+		
+		return answer;
+	}
+	
+	// clear
+	private long getAnswer22() {
+		long answer = 0;
+		int pos = 1;
+		
+		String[] namesArray = SolutionHelper._22_NAMES_LIST.split(",");
+		Arrays.sort(namesArray);
+		
+		for (String name : namesArray) {
+			answer += helper.getNameScore(name, pos);
+			pos++;
 		}
 		
 		return answer;
