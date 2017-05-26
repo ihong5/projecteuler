@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,15 @@ public class SolutionService {
 		case 8:
 			answer = getAnswer8();
 			break;
+		case 11:
+			answer = getAnswer11();
+			break;
+		case 12:
+			answer = getAnswer12();
+			break;
+		case 13:
+			answer = getAnswer13();
+			break;
 		case 14:
 			answer = getAnswer14();
 			break;
@@ -56,6 +67,12 @@ public class SolutionService {
 			break;
 		case 28:
 			answer = getAnswer28();
+			break;
+		case 29:
+			answer = getAnswer29();
+			break;
+		case 30:
+			answer = getAnswer30();
 			break;
 		}
 			
@@ -123,7 +140,7 @@ public class SolutionService {
 		return answer;
 	}
 	
-	// warning - correct answer, but performance can be improved
+	// clear - correct answer, but performance can be improved
 	private int getAnswer5() {
 		int answer = 1,
 			counter = 0;
@@ -159,7 +176,7 @@ public class SolutionService {
 	
 	// clear
 	private long getAnswer8() {
-		String bigNumber = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450";
+		String bigNumber = SolutionHelper._8_BIG_NUMBER;
 		long answer = 0;
 		int i = 0,
 			j = i + 13;
@@ -172,6 +189,90 @@ public class SolutionService {
 			i++;
 			j++;
 		}
+		return answer;
+	}
+	
+	// clear
+	private long getAnswer11() {
+		long answer = 0,
+			 compare = 0;
+		int[][] numbersGrid = SolutionHelper._11_NUMBERS_GRID;
+		int len = 20;
+		
+		for (int i = 0; i < len; i++) {
+			for (int j = 0; j < len; j++) {
+				for (int k = 0; k < 8; k++) {
+					try {
+						switch (k) {
+						case 0:
+							compare = numbersGrid[i][j] * numbersGrid[i + 1][j] * numbersGrid[i + 2][j] * numbersGrid[i + 3][j];
+							break;
+						case 1:
+							compare = numbersGrid[i][j] * numbersGrid[i + 1][j + 1] * numbersGrid[i + 2][j + 2] * numbersGrid[i + 3][j + 3];
+							break;
+						case 2:
+							compare = numbersGrid[i][j] * numbersGrid[i][j + 1] * numbersGrid[i][j + 2] * numbersGrid[i][j + 3];
+							break;
+						case 3:
+							compare = numbersGrid[i][j] * numbersGrid[i - 1][j + 1] * numbersGrid[i - 2][j + 2] * numbersGrid[i - 3][j + 3];
+							break;
+						case 4:
+							compare = numbersGrid[i][j] * numbersGrid[i - 1][j] * numbersGrid[i - 2][j] * numbersGrid[i - 3][j];
+							break;
+						case 5:
+							compare = numbersGrid[i][j] * numbersGrid[i - 1][j - 1] * numbersGrid[i - 2][j - 2] * numbersGrid[i - 3][j - 3];
+							break;
+						case 6:
+							compare = numbersGrid[i][j] * numbersGrid[i][j - 1] * numbersGrid[i][j - 2] * numbersGrid[i][j - 3];
+							break;
+						case 7:
+							compare = numbersGrid[i][j] * numbersGrid[i + 1][j - 1] * numbersGrid[i + 2][j - 2] * numbersGrid[i + 3][j - 3];
+							break;
+						}
+						if (compare > answer) answer = compare;
+					} catch (ArrayIndexOutOfBoundsException aiEx) {
+						
+					}
+				}
+			}
+		}
+		
+		return answer;
+	}
+	
+	// TODO: complete this
+	private long getAnswer12() {
+		long answer = 0;
+		int i = 1;
+		boolean triNumFound = false;
+		while (!triNumFound) {
+			long triNum = helper.getTriangleNumber(i);
+			if (helper.getNumDivisors(triNum) > 5) {
+				answer = triNum;
+				triNumFound = true;
+			}
+		}
+		return answer;
+	}
+	
+	// clear
+	private long getAnswer13() {
+		long answer = 0;
+		
+		BigInteger sum = BigInteger.ZERO,
+				   num = null;
+		
+		String[] nArray = SolutionHelper._13_NUMBERS_LIST;
+		
+		for (String n : nArray) {
+			num = new BigInteger(n);
+			sum = sum.add(num);
+		}
+		
+		String firstTenDigits = sum.toString().substring(0, 10);
+		
+		answer = Long.parseLong(firstTenDigits);
+		
 		return answer;
 	}
 	
@@ -311,5 +412,42 @@ public class SolutionService {
 	}
 
     // clear
+	private int getAnswer29() {
+		int answer = 0;
+		
+		Set<BigInteger> pSet = new HashSet<BigInteger>();
+		
+		for (int i = 2; i <= 100; i++) {
+			for (int j = 2; j <= 100; j++) {
+				BigInteger p = BigInteger.valueOf(i).pow(j);
+				pSet.add(p);
+			}
+		}
+		
+		answer = pSet.size();
+		
+		return answer;
+	}
+	
+	// clear; need a better implementation
+	// it should include all numbers with any number of digits, not just 5 digits
+	private int getAnswer30() {
+		int answer = 0;
+		
+		for (int i = 1000000; i > 1; i--) {
+			int fifthPowerSum = 0,
+				j = i;
+			while (j > 0) {
+				fifthPowerSum += Math.pow(j % 10, 5);
+				j /= 10;
+			}
+			if (fifthPowerSum == i) {
+				answer += fifthPowerSum;
+				System.out.println(fifthPowerSum);
+			}
+		}
+		
+		return answer;
+	}
 	
 }
