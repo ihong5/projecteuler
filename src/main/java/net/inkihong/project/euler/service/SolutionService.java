@@ -74,6 +74,9 @@ public class SolutionService {
 		case 30:
 			answer = getAnswer30();
 			break;
+		case 36:
+			answer = getAnswer36();
+			break;
 		}
 			
 		return answer;	
@@ -444,6 +447,22 @@ public class SolutionService {
 			if (fifthPowerSum == i) {
 				answer += fifthPowerSum;
 				System.out.println(fifthPowerSum);
+			}
+		}
+		
+		return answer;
+	}
+	
+	// TODO: complete this
+	private long getAnswer36() {
+		long answer = 0;
+		
+		for (int i = 1; i < 1000000; i++) {
+			boolean isDecimalPalindrome = helper.isPalindrome(i),
+					isBinaryPalindrome = helper.isPalindrome(helper.toBinary(i));
+			
+			if (isDecimalPalindrome && isBinaryPalindrome) {
+				answer += i;
 			}
 		}
 		
