@@ -2,12 +2,16 @@ package net.inkihong.project.euler.service;
 
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import net.inkihong.project.euler.util.Node;
 
 @Service
 public class SolutionService {
@@ -74,8 +78,14 @@ public class SolutionService {
 		case 30:
 			answer = getAnswer30();
 			break;
+		case 31:
+			answer = getAnswer31();
+			break;
 		case 36:
 			answer = getAnswer36();
+			break;
+		case 48:
+			answer = getAnswer48();
 			break;
 		}
 			
@@ -280,25 +290,30 @@ public class SolutionService {
 	}
 	
 	// TODO: complete this
+	// THIS IS A MOTHER ****ING MEMORY KILLER
 	private int getAnswer14() {
 		int answer = 0,
 			counter = 1,
 			max = 0;
-			
-		for (int i = 1; i < 1000000; i++) {
-			counter = 1;
-			answer = i;
-			while (answer != 1) {
-				if (answer % 2 == 0) {
-					answer /= 2;
-				} else {
-					answer = (3 * answer) + 1;
-				}
-				counter++;
+		
+		List<Node> nodes = new ArrayList<Node>();
+		
+		for (int i = 999999; i > 0; i--) {
+			Node node = new Node(i);
+			nodes.add(node);
+		}
+		
+		for (Node node : nodes) {
+			int start = node.getStart();
+			while (start != 1) {
+				int next = (start % 2 == 0) ? start / 2 : (start * 3) + 1;
+				node.getChain().add(next);
 			}
+			
+			counter = node.getChain().size();
 			if (counter > max) {
 				max = counter;
-				answer = i;
+				answer = start;
 				System.out.println(String.format("%d has chain length of %d!", answer, counter));
 			}
 		}
@@ -453,7 +468,15 @@ public class SolutionService {
 		return answer;
 	}
 	
-	// TODO: complete this
+	private int getAnswer31() {
+		int answer = 0;
+		
+		
+		
+		return answer;
+	}
+	
+	// clear
 	private long getAnswer36() {
 		long answer = 0;
 		
@@ -466,6 +489,27 @@ public class SolutionService {
 			}
 		}
 		
+		return answer;
+	}
+	
+	// TODO: clear
+	private long getAnswer48() {
+		long answer = 0;
+		
+		BigInteger total = BigInteger.ZERO;
+		
+		for (int i = 1; i <= 1000; i++) {
+			BigInteger bi = BigInteger.valueOf(i),
+					   selfPower = bi.pow(i);
+			
+			total = total.add(selfPower);		   
+		}
+		
+		String s = total.toString(),
+			   last10 = s.substring(s.length() - 10);
+		
+		answer = Long.parseLong(last10);
+
 		return answer;
 	}
 	
