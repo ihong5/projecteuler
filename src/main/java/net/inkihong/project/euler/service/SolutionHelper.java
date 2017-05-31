@@ -162,7 +162,7 @@ public class SolutionHelper {
 		return isPalindrome;
 	}
 	
-	public boolean isPalindrome(int[] b) {
+	public boolean isPalindrome(Integer[] b) {
 		boolean isPalindrome = true;
 		int i = 0,
 			j = b.length - 1;
@@ -179,9 +179,9 @@ public class SolutionHelper {
 		return isPalindrome;
 	}
 	
-	public int[] toBinary(int i) {
+	public Integer[] toBinary(int i) {
 		List<Integer> l = new ArrayList<Integer>();
-		while (i < 0) {
+		while (i > 0) {
 			if (i % 2 == 0) {
 				l.add(1);
 			} else {
@@ -189,11 +189,8 @@ public class SolutionHelper {
 			}
 			i /= 2;
 		}
-		int[] binary = new int[l.size()];
-		
-		for (i = 0; i < l.size(); i++) {
-			binary[i] = l.get(i);
-		}
+		Integer[] binary = new Integer[l.size()];
+		binary = l.toArray(binary);
 		
 		return binary;
 	}
