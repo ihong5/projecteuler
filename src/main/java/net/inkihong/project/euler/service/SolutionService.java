@@ -12,6 +12,8 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import net.inkihong.project.euler.util.Node;
+import net.inkihong.project.euler.util.TriNode;
+import net.inkihong.project.euler.util.Triangle;
 
 @Service
 public class SolutionService {
@@ -42,6 +44,9 @@ public class SolutionService {
 		case 8:
 			answer = getAnswer8();
 			break;
+		case 9:
+			answer = getAnswer9();
+			break;
 		case 11:
 			answer = getAnswer11();
 			break;
@@ -56,6 +61,9 @@ public class SolutionService {
 			break;
 		case 16: 
 			answer = getAnswer16();
+			break;
+		case 18:
+			answer = getAnswer18();
 			break;
 		case 19:
 			answer = getAnswer19();
@@ -212,6 +220,26 @@ public class SolutionService {
 	}
 	
 	// clear
+	private int getAnswer9() {
+		int answer = 0;
+		
+		for (int i = 1; i < 1000; i++) {
+			for (int j = 1; j < 1000; j++) {
+				for (int k = 1; k < 1000; k++) {
+					int iSq = i * i,
+						jSq = j * j,
+						kSq = k * k;
+					if ( (iSq + jSq == kSq) && (i + j + k == 1000) ) {
+						answer = i * j * k;
+					}
+				}
+			}
+		}
+		
+		return answer;
+	}
+	
+	// clear
 	private long getAnswer11() {
 		long answer = 0,
 			 compare = 0;
@@ -337,6 +365,70 @@ public class SolutionService {
 		for (int i = 0; i < strPower1000.length(); i++) {
 			int digit = Integer.parseInt(strPower1000.substring(i, i + 1));
 			answer += digit;
+		}
+		
+		return answer;
+	}
+	
+	// TODO: complete this
+	private int getAnswer18() {
+		int answer = 0,
+			candidate = 0;
+		
+		final int[][] NUM = {
+//				{75},
+//				{95, 64},
+				{17, 47, 82},
+				{18, 35, 87, 10},
+				{20, 4, 82, 47, 65},
+				{19, 1, 23, 75, 3, 34},
+				{88, 2, 77, 73, 7, 63, 67},
+				{99, 65, 4, 28, 6, 16, 70, 92},
+				{41, 41, 26, 56, 83, 40, 80, 70, 33},
+				{41, 48, 72, 33, 47, 32, 37, 16, 94, 29},
+				{53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
+				{70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57},
+				{91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
+				{63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
+				{4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
+		};
+		
+		Triangle t = new Triangle(75, 95, 64);
+		
+		TriNode root = t.getRoot(),
+				leftChild = root.getLeftChild(),
+				rightChild = root.getRightChild();
+		
+		for (int[] r : NUM) {
+			t.addChildren(leftChild, r[0], r[1]);
+			for (int i = 2; i < r.length; i++) {
+				t.addChildren(rightChild, leftChild, r[i]);
+				if (i == r.length - 1) {
+					
+				} else {
+					leftChild = rightChild;
+					rightChild = rightChild.getRightSibling();
+				}
+			}
+		}
+		
+		for (int i = 16384; i > 0; i--) { // i = 2^14
+			TriNode parent = t.getRoot();
+			Integer[] binary = helper.toBinary(i);
+			for (Integer b : binary) {
+				if (b.intValue() == 0) {
+					candidate += parent.getLeftChild().getValue();
+					parent = parent.getLeftChild();
+				} else {
+					candidate += parent.getRightChild().getValue();
+					parent = parent.getRightChild();
+				}
+				
+				if (candidate > answer) {
+					answer = candidate;
+					candidate = 0;
+				}
+			}
 		}
 		
 		return answer;
