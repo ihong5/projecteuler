@@ -370,14 +370,14 @@ public class SolutionService {
 		return answer;
 	}
 	
-	// TODO: complete this
+	// TODO: clear; clean up the code
 	private int getAnswer18() {
 		int answer = 0,
 			candidate = 0;
 		
 		final int[][] NUM = {
-//				{75},
-//				{95, 64},
+				{75},
+				{95, 64},
 				{17, 47, 82},
 				{18, 35, 87, 10},
 				{20, 4, 82, 47, 65},
@@ -393,44 +393,58 @@ public class SolutionService {
 				{4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
 		};
 		
-		Triangle t = new Triangle(75, 95, 64);
+		Triangle t = new Triangle();
 		
-		TriNode root = t.getRoot(),
-				leftChild = root.getLeftChild(),
-				rightChild = root.getRightChild();
+		TriNode base = null;
 		
 		for (int[] r : NUM) {
-			t.addChildren(leftChild, r[0], r[1]);
-			for (int i = 2; i < r.length; i++) {
-				t.addChildren(rightChild, leftChild, r[i]);
-				if (i == r.length - 1) {
-					
-				} else {
-					leftChild = rightChild;
-					rightChild = rightChild.getRightSibling();
+			if (r.length > 2) {
+				for (int i = 1; i < r.length; i++) {
+					if (i == 1) { // left most
+						t.addChildren(base, r[0], r[i]);
+						base = base.rightSibling;
+					} else if ( (i > 1) && (i < r.length - 1) ) { // in the middle
+						t.addChildren(base, r[i]);
+						base = base.rightSibling;
+					} else if (i == r.length - 1) { // right most
+						t.addChildren(base, r[i]);
+						while (base.leftSibling != null) {
+							base = base.leftSibling;
+						}
+						base = base.leftChild;
+					}
 				}
+			} else if (r.length == 1) {
+				t.setRoot(new TriNode(r[0]));
+			} else if (r.length == 2) {
+				TriNode root = t.getRoot();
+				t.addChildren(root, r[0], r[1]);
+				base = root.leftChild;
 			}
 		}
 		
-		for (int i = 16384; i > 0; i--) { // i = 2^14
+		for (int i = 16383; i >= 0; i--) { // i = 2^14 = 16384, 2^3 = 8 (example)
 			TriNode parent = t.getRoot();
-			Integer[] binary = helper.toBinary(i);
-			for (Integer b : binary) {
+			candidate = t.getRoot().getValue();
+			Integer[] binary = helper.toBinary(i, 14);
+			System.out.println("\n\n");
+			for (Integer b : binary) {				
 				if (b.intValue() == 0) {
-					candidate += parent.getLeftChild().getValue();
-					parent = parent.getLeftChild();
+					candidate += parent.leftChild.getValue();
+					System.out.println(parent.leftChild.getValue());
+					parent = parent.leftChild;
 				} else {
-					candidate += parent.getRightChild().getValue();
-					parent = parent.getRightChild();
-				}
-				
-				if (candidate > answer) {
-					answer = candidate;
-					candidate = 0;
+					candidate += parent.rightChild.getValue();
+					System.out.println(parent.rightChild.getValue());
+					parent = parent.rightChild;
 				}
 			}
+			
+			if (candidate > answer) {
+				answer = candidate;
+				candidate = t.getRoot().getValue();
+			}
 		}
-		
 		return answer;
 	}
 	

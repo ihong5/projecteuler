@@ -1292,14 +1292,24 @@ public class SolutionHelper {
 		return isPalindrome;
 	}
 	
+	public Integer[] toBinary(int i, int s) {
+		List<Integer> l = new ArrayList<Integer>();
+		int a = 0; 
+		while (a < s) {
+			l.add(i % 2);
+			i /= 2;
+			a++;
+		}
+		Integer[] binary = new Integer[l.size()];
+		binary = l.toArray(binary);
+		
+		return binary;
+	}
+	
 	public Integer[] toBinary(int i) {
 		List<Integer> l = new ArrayList<Integer>();
 		while (i > 0) {
-			if (i % 2 == 0) {
-				l.add(1);
-			} else {
-				l.add(0);
-			}
+			l.add(i % 2);
 			i /= 2;
 		}
 		Integer[] binary = new Integer[l.size()];

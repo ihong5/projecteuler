@@ -4,7 +4,7 @@ public class TriNode {
 	
 	private int value;
 	
-	private TriNode leftChild, rightChild, leftSibling, rightSibling;
+	public TriNode leftChild, rightChild, leftSibling, rightSibling;
 	
 	public TriNode getLeftSibling() {
 		return leftSibling;

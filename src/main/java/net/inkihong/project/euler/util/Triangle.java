@@ -4,12 +4,6 @@ public class Triangle {
 	
 	private TriNode root;
 	
-	public Triangle(int value, int lv, int rv) {
-		this.root = new TriNode(value);
-		
-		addChildren(this.root, lv, rv);
-	}
-	
 	public TriNode getRoot() {
 		return root;
 	}
@@ -23,24 +17,23 @@ public class Triangle {
 		TriNode leftChild = new TriNode(lv),
 				rightChild = new TriNode(rv);
 		
-		parent.setLeftChild(leftChild);
-		parent.setRightChild(rightChild);
+		parent.leftChild = leftChild;
+		parent.rightChild = rightChild;
 		
-		leftChild.setRightSibling(rightChild);
-		rightChild.setLeftSibling(leftChild);
+		leftChild.rightSibling = parent.rightChild;
+		rightChild.leftSibling = parent.leftChild;
 	}
 	
 	// use this method when parent is not left most parent
-	public void addChildren(TriNode parent, TriNode sibling, int rv) {
-		TriNode leftChild = sibling.getRightChild(),
-				rightChild = new TriNode(rv);
+	public void addChildren(TriNode parent, int rv) {
+		TriNode sibling = parent.leftSibling;
+		TriNode leftChild = sibling.rightChild;
+		TriNode rightChild = new TriNode(rv);
 		
-		parent.setLeftChild(leftChild);
-		parent.setRightChild(rightChild);
+		parent.leftChild = leftChild;
+		parent.rightChild = rightChild;
 		
-		leftChild.setLeftSibling(sibling.getLeftChild());
-		leftChild.setRightSibling(rightChild);
-		
-		rightChild.setLeftSibling(leftChild);
+		leftChild.rightSibling = rightChild;
+		rightChild.leftSibling = leftChild;
 	}
 }
