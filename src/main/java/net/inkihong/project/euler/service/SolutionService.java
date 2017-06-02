@@ -87,6 +87,12 @@ public class SolutionService {
 		case 48:
 			answer = getAnswer48();
 			break;
+		case 54:
+			answer = getAnswer54();
+			break;
+		case 56:
+			answer = getAnswer56();
+			break;
 		}
 			
 		return answer;	
@@ -492,7 +498,7 @@ public class SolutionService {
 		return answer;
 	}
 	
-	// TODO: clear
+	// clear
 	private long getAnswer48() {
 		long answer = 0;
 		
@@ -510,6 +516,38 @@ public class SolutionService {
 		
 		answer = Long.parseLong(last10);
 
+		return answer;
+	}
+	
+	// TODO: complete this
+	private int getAnswer54() {
+		int answer = 0;
+		
+		return answer;
+	}
+	
+	// TODO: complete this
+	private long getAnswer56() {
+		long answer = 0,
+			 candidate = 0;
+		
+		final int SIDE = 99;
+		
+		for (int i = SIDE; i > 0; i--) {
+			for (int j = SIDE; j > 0; j--) {
+				String n = BigInteger.valueOf(i + 1).pow(j + 1).toString();
+				for (int k = 0; k < n.length() - 1; k++) {
+					int d = Integer.parseInt(n.substring(k, k + 1));
+					candidate += d;
+				}
+				
+				if (candidate > answer) {
+					answer = candidate;
+					candidate = 0;
+				}
+			}
+		}
+		
 		return answer;
 	}
 	
