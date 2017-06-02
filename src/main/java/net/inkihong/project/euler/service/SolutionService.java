@@ -5,8 +5,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -61,6 +63,9 @@ public class SolutionService {
 			break;
 		case 16: 
 			answer = getAnswer16();
+			break;
+		case 17:
+			answer = getAnswer17();
 			break;
 		case 18:
 			answer = getAnswer18();
@@ -365,6 +370,87 @@ public class SolutionService {
 		for (int i = 0; i < strPower1000.length(); i++) {
 			int digit = Integer.parseInt(strPower1000.substring(i, i + 1));
 			answer += digit;
+		}
+		
+		return answer;
+	}
+	
+	// TODO: complete this
+	private int getAnswer17() {
+		int answer = 0;
+		
+		Map<Integer, String> nwPair = new HashMap<Integer, String>();
+		
+		nwPair.put(1, "one");
+		nwPair.put(2, "two");
+		nwPair.put(3, "three");
+		nwPair.put(4, "four");
+		nwPair.put(5, "five");
+		nwPair.put(6, "six");
+		nwPair.put(7, "seven");
+		nwPair.put(8, "eight");
+		nwPair.put(9, "nine");
+		nwPair.put(10, "ten");
+		nwPair.put(11, "eleven");
+		nwPair.put(12, "twelve");
+		nwPair.put(13, "thirteen");
+		nwPair.put(14, "fourteen");
+		nwPair.put(15, "fifteen");
+		nwPair.put(16, "sixteen");
+		nwPair.put(17, "seventeen");
+		nwPair.put(18, "eighteen");
+		nwPair.put(19, "nineteen");
+		nwPair.put(20, "twenty");
+		nwPair.put(30, "thirty");
+		nwPair.put(40, "forty");
+		nwPair.put(50, "fifty");
+		nwPair.put(60, "sixty");
+		nwPair.put(70, "seventy");
+		nwPair.put(80, "eighty");
+		nwPair.put(90, "ninety");
+		nwPair.put(100, "hundred");
+		nwPair.put(1000, "thousand");
+		
+		for (int i = 1; i <= 1000; i++) {
+			if (nwPair.containsKey(i)) {
+				if ( (i == 100) || (i == 1000) ) {
+					answer += 3;
+				}
+				int nl = nwPair.get(i).length();
+				answer += nl;
+			} else if ( (i > 20) && (i < 100) ) {
+				int ones = i % 10,
+					nl = nwPair.get(ones).length(),
+					tens = i - ones,
+					nl2 = nwPair.get(tens).length();
+				answer += nl;
+				answer += nl2;
+			} else if ( (i > 100) && (i < 1000) ) {
+				int last2Digits = i % 100;
+				if ( (last2Digits > 0) && (last2Digits <= 20) ) {
+					int hundreds = i / 100,
+						nl = nwPair.get(hundreds).length(),
+						nl2 = nwPair.get(100).length(),
+						nl3 = nwPair.get(last2Digits).length();
+					answer += nl; // one, two, three, etc.. hundred
+					answer += nl2; // hundred
+					answer += 3; // and
+					answer += nl3; // remaining 2 digits
+				} else {
+					int hundreds = i / 100,
+						nl = nwPair.get(hundreds).length(), // one, two, three, etc.. hundred
+						nl2 = nwPair.get(100).length(), // hundred
+						ones = i % 10,
+						nl3 = nwPair.get(ones).length(), // one, two, three, etc. last digit
+						tens = i - (hundreds * 100) - ones,
+						nl4 = nwPair.get(tens).length(); // thirty, forty, firty, etc..
+					answer += nl;
+					answer += nl2;
+					answer += 3; // and
+					answer += nl3;
+					answer += nl4;		
+				}
+			}
 		}
 		
 		return answer;
