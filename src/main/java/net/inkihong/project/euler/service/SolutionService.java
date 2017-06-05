@@ -438,17 +438,24 @@ public class SolutionService {
 					answer += nl3; // remaining 2 digits
 				} else {
 					int hundreds = i / 100,
-						nl = nwPair.get(hundreds).length(), // one, two, three, etc.. hundred
+						nl = nwPair.get(hundreds).length(), // 100, 200, 300, etc...
 						nl2 = nwPair.get(100).length(), // hundred
-						ones = i % 10,
-						nl3 = nwPair.get(ones).length(), // one, two, three, etc. last digit
-						tens = i - (hundreds * 100) - ones,
-						nl4 = nwPair.get(tens).length(); // thirty, forty, firty, etc..
+						ones = i % 10;
+						if (ones == 0) {
+							int tens = i - (hundreds * 100);
+							answer += nwPair.get(tens).length();
+						} else {
+							int nl3 = nwPair.get(ones).length(), // one, two, three, etc. last digit
+								tens = i - (hundreds * 100) - ones,
+								nl4 = nwPair.get(tens).length(); // thirty, forty, firty, etc..
+							answer += nl3;
+							answer += nl4;
+						}
+						answer += nl;
 					answer += nl;
 					answer += nl2;
 					answer += 3; // and
-					answer += nl3;
-					answer += nl4;		
+							
 				}
 			}
 		}
