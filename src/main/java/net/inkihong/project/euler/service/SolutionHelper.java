@@ -1331,7 +1331,7 @@ public class SolutionHelper {
 	public long getTriangleNumber(int n) {
 		long triNum = 0;
 		
-		for (int i = 1; i <= n; i++) {
+		for (int i = n; i > 0; i--) {
 			triNum += i;
 		}
 		
@@ -1341,7 +1341,7 @@ public class SolutionHelper {
 	public long getNumDivisors(long n) {
 		int numDivisors = 0;
 		
-		for (long i = 1; i <= n; i++) {
+		for (long i = n; i > 0; i--) {
 			if (n % i == 0) {
 				numDivisors++;
 			}
